@@ -10,7 +10,12 @@ library firebase_interop.firebase;
 import 'package:firebase_core_web/firebase_core_web_interop.dart';
 
 import 'package:js/js.dart';
+import 'package:js/js_util.dart';
 import 'storage_interop.dart';
 
 @JS()
 external StorageJsImpl storage([AppJsImpl? app]);
+
+StorageJsImpl storageForBucket(String bucket, AppJsImpl app) {
+  return callMethod(app, 'storage', []);
+}

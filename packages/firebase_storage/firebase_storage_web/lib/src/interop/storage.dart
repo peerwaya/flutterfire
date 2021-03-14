@@ -26,6 +26,11 @@ Storage getStorageInstance([App? app]) {
       : firebase_interop.storage());
 }
 
+Storage getStorageForBucket(String bucketUrl, App app) {
+  return Storage.getInstance(
+      firebase_interop.storageForBucket(bucketUrl, app.jsObject));
+}
+
 /// A service for uploading and downloading large objects to and from the
 /// Google Cloud Storage.
 ///
