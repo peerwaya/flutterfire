@@ -27,7 +27,7 @@ Storage getStorageInstance([App? app]) {
 }
 
 Storage getStorageForBucket(String bucketUrl, App app) {
-  return Storage.getInstance(
+  return Storage.fromJsObject(
       firebase_interop.storageForBucket(bucketUrl, app.jsObject));
 }
 
@@ -36,7 +36,7 @@ Storage getStorageForBucket(String bucketUrl, App app) {
 ///
 /// See: <https://firebase.google.com/docs/reference/js/firebase.storage.Storage>
 class Storage extends JsObjectWrapper<storage_interop.StorageJsImpl> {
-  Storage._fromJsObject(storage_interop.StorageJsImpl jsObject)
+  Storage.fromJsObject(storage_interop.StorageJsImpl jsObject)
       : super.fromJsObject(jsObject);
 
   static final _expando = Expando<Storage>();
@@ -53,7 +53,7 @@ class Storage extends JsObjectWrapper<storage_interop.StorageJsImpl> {
 
   /// Creates a new Storage from a [jsObject].
   static Storage getInstance(storage_interop.StorageJsImpl jsObject) {
-    return _expando[jsObject] ??= Storage._fromJsObject(jsObject);
+    return _expando[jsObject] ??= Storage.fromJsObject(jsObject);
   }
 
   /// Returns a [StorageReference] for the given [path] in the default bucket.
