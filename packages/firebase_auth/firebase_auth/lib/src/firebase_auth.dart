@@ -242,9 +242,11 @@ class FirebaseAuth extends FirebasePluginPlatform {
     StreamController<User?>? streamController;
     streamController = StreamController<User?>.broadcast(onListen: () {
       // Fire an event straight away
-      streamController!.add(currentUser);
+      if (!kIsWeb) {
+        streamController!.add(currentUser);
+      }
       // Pipe events of the broadcast stream into this stream
-      streamSync.pipe(streamController);
+      streamSync.pipe(streamController!);
     });
 
     return streamController.stream;
