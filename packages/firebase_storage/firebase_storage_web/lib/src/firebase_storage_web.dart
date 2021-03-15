@@ -27,9 +27,8 @@ class FirebaseStorageWeb extends FirebaseStoragePlatform {
             ? storage_interop.getStorageForBucket(
                 'gs://$bucket', core_interop.app(app?.name))
             : storage_interop.getStorageInstance(core_interop.app(app?.name)),
-        super(appInstance: app, bucket: bucket) {
-          print('BUCKET NAME: $bucket');
-        }
+        super(appInstance: app, bucket: bucket);
+
   // Empty constructor. This is only used by the registerWith method.
   // superclass also needs to be initialized and 'bucket' param is required.
   FirebaseStorageWeb._nullInstance()

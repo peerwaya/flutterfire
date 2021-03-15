@@ -17,5 +17,5 @@ import 'storage_interop.dart';
 external StorageJsImpl storage([AppJsImpl? app]);
 
 StorageJsImpl storageForBucket(String bucket, AppJsImpl app) {
-  return callMethod(app, 'storage', []);
+  return callMethod(app, 'storage', [bucket]);
 }
