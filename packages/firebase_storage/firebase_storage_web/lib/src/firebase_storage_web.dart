@@ -23,9 +23,9 @@ class FirebaseStorageWeb extends FirebaseStoragePlatform {
   /// Construct the plugin.
   /// (Web doesn't use the `bucket`, since the init happens in index.html)
   FirebaseStorageWeb({FirebaseApp? app, required String bucket})
-      : webStorage = bucket.isNotEmpty && app != null
+      : webStorage = bucket.isNotEmpty
             ? storage_interop.getStorageForBucket(
-                'gs://$bucket', core_interop.app(app.name))
+                'gs://$bucket', core_interop.app(app?.name))
             : storage_interop.getStorageInstance(core_interop.app(app?.name)),
         super(appInstance: app, bucket: bucket);
   // Empty constructor. This is only used by the registerWith method.
