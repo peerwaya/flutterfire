@@ -197,6 +197,15 @@ abstract class AuthCredential {
   /// 'password', or 'emailLink'. This corresponds to the sign-in method
   /// identifier as returned in firebase.auth.Auth.fetchSignInMethodsForEmail.
   external String get signInMethod;
+  external String? get accessToken;
+
+  /// The OAuth ID token associated with the credential if it belongs to an
+  /// OIDC provider, such as google.com.
+  external String? get idToken;
+
+  /// The OAuth access token secret associated with the credential if it
+  /// belongs to an OAuth 1.0 provider, such as twitter.com.
+  external String? get secret;
 }
 
 /// Interface that represents the OAuth credentials returned by an OAuth
@@ -209,14 +218,17 @@ abstract class AuthCredential {
 abstract class OAuthCredential extends AuthCredential {
   /// The OAuth access token associated with the credential if it belongs to
   /// an OAuth provider, such as facebook.com, twitter.com, etc.
+  @override
   external String get accessToken;
 
   /// The OAuth ID token associated with the credential if it belongs to an
   /// OIDC provider, such as google.com.
+  @override
   external String get idToken;
 
   /// The OAuth access token secret associated with the credential if it
   /// belongs to an OAuth 1.0 provider, such as twitter.com.
+  @override
   external String get secret;
 }
 
