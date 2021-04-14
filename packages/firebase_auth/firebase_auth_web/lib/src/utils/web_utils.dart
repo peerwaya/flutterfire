@@ -29,7 +29,9 @@ FirebaseAuthException getFirebaseAuthException(Object exception) {
     code: code,
     message: message,
     email: firebaseError.email,
-    credential: convertWebAuthCredential(firebaseError.credential),
+    credential: firebaseError.credential is auth_interop.OAuthCredential
+        ? convertWebOAuthCredential(firebaseError.credential as auth_interop.OAuthCredential)
+        : convertWebAuthCredential(firebaseError.credential),
     phoneNumber: firebaseError.phoneNumber,
     tenantId: firebaseError.tenantId,
   );
