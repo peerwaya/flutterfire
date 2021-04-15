@@ -1004,8 +1004,10 @@ class UserCredential
   String get operationType => jsObject.operationType;
 
   /// Returns additional user information from a federated identity provider.
-  AdditionalUserInfo get additionalUserInfo =>
-      AdditionalUserInfo.fromJsObject(jsObject.additionalUserInfo);
+  AdditionalUserInfo? get additionalUserInfo =>
+      jsObject.additionalUserInfo != null
+          ? AdditionalUserInfo.fromJsObject(jsObject.additionalUserInfo!)
+          : null;
 
   /// Creates a new UserCredential from a [jsObject].
   UserCredential.fromJsObject(auth_interop.UserCredentialJsImpl jsObject)

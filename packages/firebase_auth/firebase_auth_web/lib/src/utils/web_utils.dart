@@ -24,14 +24,11 @@ FirebaseAuthException getFirebaseAuthException(Object exception) {
   String code = firebaseError.code.replaceFirst('auth/', '');
   String message =
       firebaseError.message.replaceFirst('(${firebaseError.code})', '');
-
   return FirebaseAuthException(
     code: code,
     message: message,
     email: firebaseError.email,
-    credential: firebaseError.credential.accessToken != null
-        ? convertWebOAuthCredential(firebaseError.credential as auth_interop.OAuthCredential)
-        : convertWebAuthCredential(firebaseError.credential),
+    credential: convertWebOAuthCredential(firebaseError.credential),
     phoneNumber: firebaseError.phoneNumber,
     tenantId: firebaseError.tenantId,
   );
@@ -57,7 +54,6 @@ AdditionalUserInfo? convertWebAdditionalUserInfo(
   if (webAdditionalUserInfo == null) {
     return null;
   }
-
   return AdditionalUserInfo(
     isNewUser: webAdditionalUserInfo.isNewUser,
     profile: webAdditionalUserInfo.profile,
@@ -212,7 +208,35 @@ AuthCredential? convertWebOAuthCredential(
   if (oAuthCredential == null) {
     return null;
   }
+  if (oAuthCredential.email != null) {
+    if (oAuthCredential.emailLink != null) {
+      return EmailAuthProvider.credentialWithLink(
+          email: oAuthCredential.email!, emailLink: oAuthCredential.emailLink!);
+    }
+    return EmailAuthProvider.credential(
+        email: oAuthCredential.email!, password: oAuthCredential.password!);
+  }
 
+  if (oAuthCredential.providerId ==
+      auth_interop.TwitterAuthProvider.PROVIDER_ID) {
+    return TwitterAuthProvider.credential(
+        accessToken: oAuthCredential.accessToken,
+        secret: oAuthCredential.secret);
+  }
+  if (oAuthCredential.providerId ==
+      auth_interop.FacebookAuthProvider.PROVIDER_ID) {
+    return FacebookAuthProvider.credential(oAuthCredential.accessToken);
+  }
+  if (oAuthCredential.providerId ==
+      auth_interop.GithubAuthProvider.PROVIDER_ID) {
+    return GithubAuthProvider.credential(oAuthCredential.accessToken);
+  }
+  if (oAuthCredential.providerId ==
+      auth_interop.GoogleAuthProvider.PROVIDER_ID) {
+    return GoogleAuthProvider.credential(
+        idToken: oAuthCredential.idToken,
+        accessToken: oAuthCredential.accessToken);
+  }
   return OAuthProvider(oAuthCredential.providerId).credential(
     accessToken: oAuthCredential.accessToken,
     idToken: oAuthCredential.idToken,
@@ -247,13 +271,6 @@ auth_interop.OAuthCredential? convertPlatformCredential(
 
   if (credential is GoogleAuthCredential) {
     return auth_interop.GoogleAuthProvider.credential(
-      credential.idToken,
-      credential.accessToken,
-    );
-  }
-
-  if (credential is OAuthCredential) {
-    return auth_interop.OAuthProvider(credential.providerId).credential(
       credential.idToken,
       credential.accessToken,
     );

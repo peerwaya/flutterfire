@@ -20,6 +20,8 @@ class UserCredentialWeb extends UserCredentialPlatform {
             webUserCredential.additionalUserInfo,
           ),
           credential: convertWebOAuthCredential(webUserCredential.credential),
-          user: UserWeb(auth, webUserCredential.user!),
+          user: webUserCredential.user != null
+              ? UserWeb(auth, webUserCredential.user!)
+              : null,
         );
 }

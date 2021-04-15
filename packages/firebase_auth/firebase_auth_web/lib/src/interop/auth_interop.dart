@@ -206,6 +206,24 @@ abstract class AuthCredential {
   /// The OAuth access token secret associated with the credential if it
   /// belongs to an OAuth 1.0 provider, such as twitter.com.
   external String? get secret;
+
+  /// The email associated with this credential
+  external String? get email;
+
+  /// The emailLink associated with this credential
+  external String? get emailLink;
+
+  /// The password associated with this credential
+  external String? get password;
+}
+
+/// Interface that represents the EmailAuth credentials returned by an OAuth
+@JS()
+@anonymous
+abstract class EmailOAuthCredential extends AuthCredential {
+  /// The email associated with this credential
+  @override
+  external String get email;
 }
 
 /// Interface that represents the OAuth credentials returned by an OAuth
@@ -385,8 +403,8 @@ abstract class AuthError {
   external set message(String s);
   external String get email;
   external set email(String s);
-  external AuthCredential get credential;
-  external set credential(AuthCredential c);
+  external OAuthCredential get credential;
+  external set credential(OAuthCredential c);
   external String get tenantId;
   external set tenantId(String s);
   external String get phoneNumber;
@@ -490,7 +508,7 @@ class UserCredentialJsImpl {
   external UserJsImpl get user;
   external OAuthCredential get credential;
   external String get operationType;
-  external AdditionalUserInfoJsImpl get additionalUserInfo;
+  external AdditionalUserInfoJsImpl? get additionalUserInfo;
 }
 
 /// https://firebase.google.com/docs/reference/js/firebase.auth#.AdditionalUserInfo
