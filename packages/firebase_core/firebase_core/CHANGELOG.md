@@ -1,3 +1,24 @@
+## 1.1.0
+
+ - **FEAT**: update iOS Firebase SDK from 7.3 to 7.11 (#5896).
+
+## 1.0.4
+
+ - **REFACTOR**: Share guard functions accross plugins (#5783).
+ - **CHORE**: update Web plugins to use Firebase JS SDK version 8.4.1 (#4464).
+
+## 1.0.3
+
+ - **REFACTOR**: Remove deprecated gradle property android.enableR8=true (#5463).
+ - **CHORE**: add repository urls to pubspecs (#5542).
+ - **CHORE**: bump min Dart SDK constraint to 2.12.0 (#5430).
+ - **CHORE**: publish packages (#5429).
+ - **CHORE**: publish packages.
+
+## 1.0.2
+
+ - Update a dependency to the latest release.
+
 ## 1.0.1
 
  - Update a dependency to the latest release.
